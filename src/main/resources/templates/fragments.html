@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head th:fragment="head(title)">
+<meta charset="UTF-8">
+<title th:text="${title}">自販機シミュレーター</title>
+<link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<footer th:fragment="footer(js)">
+  <script th:if="${js != null}" th:src="@{${js}}"></script>
+</footer>
+</body>
+</html>

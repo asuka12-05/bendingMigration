@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('自販機シミュレーター')}"></head>
+<body>
+<div class="start-wrapper">
+  <div class="bg-overlay"></div>
+  <div class="start-container">
+    <div class="title-box">
+      <h1>自販機シミュレーター</h1>
+    </div>
+    <div class="btn-group">
+      <a th:href="@{/bending/consumer}">
+        <button class="start-btn consumer-btn">買　う</button>
+      </a>
+      <a th:href="@{/bending/admin}">
+        <button class="start-btn admin-btn">売　る</button>
+      </a>
+    </div>
+  </div>
+  <form th:action="@{/reset}" method="post" id="resetForm">
+    <button type="button" class="reset-btn" onclick="confirmReset()">
+      &#x21BB; RESET
+    </button>
+  </form>
+</div>
+<div th:replace="~{fragments/layout :: footer('/js/start.js')}"></div>
+</body>
+</html>
