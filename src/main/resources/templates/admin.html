@@ -3,7 +3,164 @@
 <head th:replace="~{fragments/layout :: head('自販機シミュレーター')}"></head>
 <body>
 
-	
-<div th:replace="~{fragments/layout :: footer('/js/admin.js')}"></div>
+  <script th:inline="javascript">
+    const IMAGE_LIST = [
+	  "drink1.png","drink2.png","drink3.png","drink4.png","drink5.png",
+      "drink6.png","drink7.png","drink8.png","drink9.png","drink10.png"
+    ];
+	const CONTEXT_PATH = /*[[@{/}]]*/ '/';
+  </script>
+
+  <div class="page-wrapper">
+
+    <!-- 左：自販機本体 -->
+	<div class="machine-area">
+
+      <!-- 商品ボタン群 -->
+      <div class="drink-btn" id="jsi-drink-btn">
+        <th:block th:each="drink : ${drinkList}">
+          <!-- 売り切れ -->
+          <div th:if="${drink.inventory == 0}"
+               class="drink-slot no-stock"
+               th:onclick="|selectSlot(${drink.id}, '${drink.name}', ${drink.price}, ${drink.inventory}, '${drink.temperature}', true, '${drink.imagePath}')|">
+            <img th:src="@{/images/__${drink.imagePath}__}" th:alt="${drink.name}" class="drink-img">
+            <span class="drink-name" th:text="${drink.name}"></span>
+            <span class="drink-stock">0本</span>
+          </div>
+          <!-- 在庫あり -->
+          <div th:unless="${drink.inventory == 0}"
+               th:class="|drink-slot ${drink.temperature == 'HOT' ? 'hot' : 'cold'}|"
+               th:onclick="|selectSlot(${drink.id}, '${drink.name}', ${drink.price}, ${drink.inventory}, '${drink.temperature}', false, '${drink.imagePath}')|">
+            <img th:src="@{/images/__${drink.imagePath}__}" th:alt="${drink.name}" class="drink-img">
+            <span class="drink-name" th:text="${drink.name}"></span>
+            <span class="drink-stock" th:text="${drink.inventory} + '本'"></span>
+          </div>
+        </th:block>
+      </div>
+
+      <!-- 補充ボタン・カスタムボタン -->
+      <div class="option-btns">
+        <div class="replenish-group">
+          <button class="op-btn replenish-btn" id="jsi-replenishBtn" onclick="toggleReplenish()" disabled>補 充</button>
+          <!-- 補充プルダウン -->
+          <div class="replenish-dropdown" id="jsi-replenishDropdown" style="display:none">
+            <form th:action="@{/replenish}" method="post" id="jsi-replenishForm">
+              <input type="hidden" name="drinkId" id="jsi-replenishDrinkId" value="">
+              <select name="count" class="count-select" id="jsi-replenishCount">
+                <option value="" selected>本数を選択</option>
+                <option value="1">1本</option>
+                <option value="2">2本</option>
+                <option value="3">3本</option>
+                <option value="4">4本</option>
+                <option value="5">5本</option>
+              </select>
+              <button type="submit" class="decide-btn">決定</button>
+            </form>
+          </div>
+        </div>
+        <button class="op-btn custom-btn" id="jsi-customBtn" onclick="openCustom()" disabled>カスタム</button>
+      </div>
+
+      <!-- 売上エリア -->
+      <div class="sales-area">
+        <div class="sales-total">
+          売上合計：
+          <span id="salesTotalDisplay" th:text="${sales != null ? sales.totalSales + '円' : '0円'}"></span>
+        </div>
+        <form th:action="@{/collect}" method="post" id="collectForm">
+          <button type="button" class="collect-btn" id="collectBtn"
+                  onclick="confirmCollect()"
+                  th:disabled="${sales == null or sales.totalSales == 0}">
+            売上回収
+          </button>
+        </form>
+      </div>
+
+      <div class="machine-bottom"></div>
+    </div>
+	<!-- 自販機本体ここまで -->
+
+    <!-- 右：詳細・カスタム・メッセージ・戻る -->
+    <div class="info-area">
+
+      <!-- 詳細・カスタムウインドウ -->
+      <div class="detail-window" id="detailWindow">
+
+        <!-- 補充時：商品詳細表示 -->
+        <div id="detailView">
+          <div class="detail-img-area">
+            <img th:src="@{/images/1.png}" alt="" id="detailImg" class="drink-img">
+          </div>
+          <div class="detail-info">
+            <div class="detail-row" id="detailName">商品を選んでください</div>
+            <div class="detail-row"><span id="detailStock">－</span>本</div>
+            <div class="detail-row"><span id="detailPrice">－</span>円</div>
+            <div class="detail-row" id="detailTemp">－</div>
+          </div>
+        </div>
+
+        <!-- カスタム時：カスタム入力画面 -->
+        <div id="customView" style="display:none">
+          <!-- 画像スライダー -->
+          <div class="img-slider">
+            <button type="button" class="slide-btn" onclick="prevImage()">&#9664;</button>
+            <img th:src="@{/images/drink1.png}" alt="ドリンク画像" id="customImg" class="custom-drink-img">
+            <button type="button" class="slide-btn" onclick="nextImage()">&#9654;</button>
+          </div>
+
+          <!-- カスタム入力フォーム -->
+          <form th:action="@{/addCustom}" method="post" id="customForm">
+            <input type="hidden" name="drinkId" id="customTargetId" value="">
+            <input type="hidden" name="imageFile" id="customImageFile" value="drink1.png">
+            <div class="custom-inputs">
+              <div class="custom-row">
+                <label>NAME</label>
+                <input type="text" name="name" id="customName"
+                       class="custom-input" placeholder="商品名を入力">
+                <select name="count" class="custom-select">
+                  <option value="">本数</option>
+                  <option value="1">1本</option>
+                  <option value="2">2本</option>
+                  <option value="3">3本</option>
+                  <option value="4">4本</option>
+                  <option value="5">5本</option>
+                </select>
+              </div>
+              <div class="custom-row">
+                <label>PRICE</label>
+                <select name="price" class="custom-select">
+                  <option th:each="p : ${#numbers.sequence(100, 200, 10)}" th:value="${p}" th:text="${p} + '円'"></option>
+                </select>
+                <button type="button" class="temp-toggle-btn" id="tempToggleBtn" onclick="toggleTemp()">HOT</button>
+                <input type="hidden" name="temperature" id="customTemp" value="HOT">
+              </div>
+            </div>
+            <button type="button" class="decide-btn custom-decide-btn"
+                            onclick="confirmCustom()">決 定</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- メッセージウインドウ -->
+      <div class="msg-window" id="msgWindow">
+        <span th:if="${errorMsg != null}" class="msg-error" th:text="${errorMsg}"></span>
+        <span th:if="${successMsg != null}" class="msg-normal" th:text="${successMsg}"></span>
+        <span th:if="${collectedSales != null}"
+              class="msg-normal"
+              th:text="${collectedSales.totalSales} + '円を回収しました'"></span>
+        <span th:if="${errorMsg == null and successMsg == null and collectedSales == null}"
+              class="msg-placeholder">メッセージ</span>
+      </div>
+
+      <!-- 戻るボタン -->
+      <div class="back-area">
+        <a th:href="@{/bending/start}">
+          <button class="back-btn">&#x2190; もどる</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/layout :: footer('/js/admin.js')}"></div>
 </body>
 </html>
