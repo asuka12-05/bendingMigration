@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class StartController {
-
 	/**
 	 * スタート画面に遷移
 	 * @return
