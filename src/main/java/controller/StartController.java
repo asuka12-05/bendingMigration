@@ -23,6 +23,6 @@ public class StartController {
 	 */
 	@PostMapping("/reset")
 	public String resetDefault(HttpSession session) {
-		return "redirect:/bending/start";
+		return "redirect:/";
 	}
 }
