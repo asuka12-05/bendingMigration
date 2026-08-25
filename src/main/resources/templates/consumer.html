@@ -1,8 +1,109 @@
 <!DOCTYPE html>
-<html>
-<head th:replace="~{fragments/layout :: head('自販機シミュレーター')}"></head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('自販機シミュレーター - 消費者')}"></head>
+<body th:insert="~{fragments/layout :: body}">
+<div class="page-wrapper">
 
-  <div th:replace="~{fragments/layout :: footer('/js/consumer.js')}"></div>
-</body>
+  <!-- 左：自販機本体 -->
+  <div class="machine-area">
+
+    <!-- 商品ボタン群 -->
+    <div class="drink-grid" id="drinkGrid">
+      <th:block th:each="drink : ${drinkList}">
+        <!-- 在庫切れ -->
+        <div th:if="${drink.inventory == 0}" class="drink-slot sold-out">
+          <div class="sold-out-band">SOLD OUT</div>
+          <img th:src="@{/images/__${drink.imagePath}__}" th:alt="${drink.name}" class="drink-img">
+          <span class="drink-name" th:text="${drink.name}"></span>
+          <span class="drink-price" th:text="'¥' + ${drink.price}"></span>
+        </div>
+        <!-- 購入可能 -->
+        <div th:unless="${drink.inventory == 0}"
+          th:class="|drink-slot ${drink.temperature == 'HOT' ? 'hot' : 'cold'}|"
+          th:data-price="${drink.price}"
+          th:onclick="|selectDrink(${drink.id}, '${drink.name}', ${drink.price}, ${drink.inventory}, '${drink.temperature}', '${drink.imagePath}')|">
+          <img th:src="@{/images/__${drink.imagePath}__}" th:alt="${drink.name}" class="drink-img">
+          <span class="drink-name" th:text="${drink.name}"></span>
+          <span class="drink-price" th:text="'¥' + ${drink.price}"></span>
+        </div>
+      </th:block>
+    </div>
+
+    <!-- コイン投入用hiddenフォーム -->
+    <form th:action="@{/insertMoney}" method="post" id="coinForm">
+      <input type="hidden" name="amount" id="coinAmount" value="0">
+    </form>
+
+    <!-- コインボタン -->
+    <div class="coin-area">
+      <th:block th:each="coin : ${#arrays.toArray({10, 50, 100, 500, 1000})}">
+        <button class="coin-btn" th:onclick="|insertCoin(${coin})|" th:text="${coin} + '円'"></button>
+      </th:block>
+    </div>
+
+    <!-- 購入・おつりボタン + 取り出し口 -->
+    <div class="action-area">
+      <!-- 取り出し口 -->
+      <div class="tray" id="tray">
+        <div th:if="${gotDrink != null}" class="got-drink">
+          <img th:src="@{/images/__${gotDrink.imagePath}__}" th:alt="${gotDrink.name}" class="tray-img">
+        </div>
+      </div>
+
+      <div class="buy-return-area">
+        <!-- 買うボタン -->
+        <form th:action="@{/buy}" method="post" id="buyForm">
+          <input type="hidden" name="drinkId" id="buyDrinkId" value="">
+          <button type="submit" class="action-btn buy-btn" id="buyBtn" disabled>買 う</button>
+        </form>
+        <!-- おつりボタン -->
+        <form th:action="@{/return}" method="post">
+          <button type="submit" class="action-btn return-btn" id="returnBtn">おつり</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右：ステータス・メッセージ・戻る -->
+  <div class="info-area">
+
+    <!-- ステータスウインドウ -->
+    <div class="status-window" id="statusWindow">
+      <div class="status-item" id="statusDrinkImg">
+        <img th:src="@{/images/hatena.png}" alt="hatena" id="statusImg" class="status-drink-img">
+      </div>
+      <div class="status-detail">
+        <div class="status-row" id="statusName">？</div>
+        <div class="status-row">
+          <span id="statusInventory">－</span>本
+        </div>
+        <div class="status-row">
+          <span id="statusPrice">－</span>円
+        </div>
+        <div class="status-row" id="statusTemp">－</div>
+        <div class="status-row inserted-row">
+          投入金額：<span id="statusInserted" th:text="${insertedMoney != null ? insertedMoney : 0}"></span>円
+        </div>
+        <div class="hint-row" id="hintWindow"></div>
+      </div>
+    </div>
+
+    <!-- メッセージウインドウ -->
+    <div class="msg-window" id="msgWindow">
+      <span th:if="${errorMsg != null}" class="msg-error" th:text="${errorMsg}"></span>
+      <span th:if="${change != null}" class="msg-normal" th:text="'お釣り：' + ${change} + '円'"></span>
+      <span th:if="${errorMsg == null and change == null}" class="msg-placeholder">メッセージ</span>
+    </div>
+
+    <!-- 戻るボタン -->
+    <div class="back-area">
+      <a th:href="@{/bending/start}" onclick="return confirmBack()">
+        <button class="back-btn">&#x2190; もどる</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer('/js/consumer.js')}"></div>
+</body th:replace="~{fragments/layout :: body}">
 </html>

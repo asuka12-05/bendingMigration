@@ -1,16 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="~{fragments/layout :: head('自販機シミュレーター')}"></head>
-<body>
-
-  <script th:inline="javascript">
-    const IMAGE_LIST = [
-	  "drink1.png","drink2.png","drink3.png","drink4.png","drink5.png",
-      "drink6.png","drink7.png","drink8.png","drink9.png","drink10.png"
-    ];
-	const CONTEXT_PATH = /*[[@{/}]]*/ '/';
-  </script>
-
+<body th:insert="~{fragments/layout :: body}">
   <div class="page-wrapper">
 
     <!-- 左：自販機本体 -->
@@ -117,7 +108,7 @@
                 <label>NAME</label>
                 <input type="text" name="name" id="customName"
                        class="custom-input" placeholder="商品名を入力">
-                <select name="count" class="custom-select">
+                <select name="inventory" class="custom-select">
                   <option value="">本数</option>
                   <option value="1">1本</option>
                   <option value="2">2本</option>

@@ -2,6 +2,11 @@
  * 消費者画面のJavaScript
  */
 
+
+// コンテキストパスをbodyのdata属性から取得
+const CONTEXT_PATH = document.body.dataset.contextPath;
+
+
 // ページ読み込み時にボタン状態を更新
 window.onload = function () {
 	updateDrinkButtons();

@@ -3,6 +3,15 @@
  * 業者画面のJavaScript
  */
 
+// コンテキストパスをbodyのdata属性から取得
+const CONTEXT_PATH = document.body.dataset.contextPath;
+
+// カスタム画像リスト
+const IMAGE_LIST = [
+  "drink1.png","drink2.png","drink3.png","drink4.png","drink5.png",
+  "drink6.png","drink7.png","drink8.png","drink9.png","drink10.png"
+];
+
 // 現在選択中のスロット情報
 let currentSlot = {
     id:        0,
