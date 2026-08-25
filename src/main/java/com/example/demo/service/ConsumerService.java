@@ -1,4 +1,4 @@
-package service;
+package com.example.demo.service;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import dao.BendingDAO;
-import dto.DrinkDto;
-import tool.Const;
+import com.example.demo.dao.BendingDAO;
+import com.example.demo.dto.DrinkDto;
+import com.example.demo.tool.Const;
 
 /**
  * 購入者側サービスクラス

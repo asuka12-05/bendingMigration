@@ -1,4 +1,4 @@
-package controller;
+package com.example.demo.controller;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import dao.BendingDAO;
-import dto.DrinkDto;
-import service.ConsumerService;
+import com.example.demo.dao.BendingDAO;
+import com.example.demo.dto.DrinkDto;
+import com.example.demo.service.ConsumerService;
 
 /**
  * 消費者コントローラー

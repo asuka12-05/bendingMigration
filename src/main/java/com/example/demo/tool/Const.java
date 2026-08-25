@@ -1,4 +1,4 @@
-package tool;
+package com.example.demo.tool;
 
 /**
  * アプリケーション全体で使用する定数クラス（画面URL、エラーメッセージ等）を保持するクラス

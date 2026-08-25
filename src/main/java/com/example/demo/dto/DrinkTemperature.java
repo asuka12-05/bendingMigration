@@ -1,4 +1,4 @@
-package dto;
+package com.example.demo.dto;
 
 /**
  * ドリンクの温度状態DTO

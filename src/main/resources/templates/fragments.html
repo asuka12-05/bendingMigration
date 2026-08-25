@@ -6,8 +6,8 @@
 <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body th:fragment="body" th:data-context-path="@{/}">
-<footer th:fragment="footer(js)">
-  <script th:if="${js != null}" th:src="@{${js}}"></script>
-</footer>
+  <footer th:fragment="footer(js)">
+    <script th:if="${js != null}" th:src="@{${js}}"></script>
+  </footer>
 </body>
 </html>

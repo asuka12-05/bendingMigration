@@ -1,4 +1,4 @@
-package controller;
+package com.example.demo.controller;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import dto.DrinkDto;
-import dto.SalesDto;
-import service.AdminService;
+import com.example.demo.dto.DrinkDto;
+import com.example.demo.dto.SalesDto;
+import com.example.demo.service.AdminService;
 
 /**
  * 業者コントローラー

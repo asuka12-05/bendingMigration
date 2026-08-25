@@ -1,4 +1,4 @@
-package dao;
+package com.example.demo.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +7,10 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
-import dto.DrinkDto;
-import dto.DrinkTemperature;
-import dto.SalesDto;
-import tool.Const;
+import com.example.demo.dto.DrinkDto;
+import com.example.demo.dto.DrinkTemperature;
+import com.example.demo.dto.SalesDto;
+import com.example.demo.tool.Const;
 
 /**
  * 自販機シミュレータの処理クラス

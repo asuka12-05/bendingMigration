@@ -1,4 +1,4 @@
-package tool;
+package com.example.demo.tool;
 
 /**
  * チェックツール
