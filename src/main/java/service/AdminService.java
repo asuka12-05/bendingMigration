@@ -22,8 +22,8 @@ public class AdminService {
 	 * 全商品取得
 	 * @param session	取得済みセッション
 	 */
-	public void getDrinkList(HttpSession session) {
-	    dao.findAll(session);
+	public List<DrinkDto> getDrinkList(HttpSession session) {
+	    return dao.findAll(session);
 	}
 	
 	/**
