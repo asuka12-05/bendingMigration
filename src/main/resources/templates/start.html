@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('自販機シミュレーター')}"></head>
+<head th:replace="~{fragments :: head('自販機シミュレーター')}"></head>
 <body>
 <div class="start-wrapper">
   <div class="bg-overlay"></div>
@@ -23,6 +23,6 @@
     </button>
   </form>
 </div>
-<div th:replace="~{fragments/layout :: footer('/js/start.js')}"></div>
+<div th:replace="~{fragments :: footer('/js/start.js')}"></div>
 </body>
 </html>

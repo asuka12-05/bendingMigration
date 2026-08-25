@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="~{fragments/layout :: head('自販機シミュレーター')}"></head>
-<body th:insert="~{fragments/layout :: body}">
+<head th:replace="~{fragments :: head('自販機シミュレーター')}"></head>
+<body th:insert="~{fragments :: body}">
   <div class="page-wrapper">
 
     <!-- 左：自販機本体 -->
@@ -152,6 +152,6 @@
     </div>
   </div>
 
-  <div th:replace="~{fragments/layout :: footer('/js/admin.js')}"></div>
+  <div th:replace="~{fragments :: footer('/js/admin.js')}"></div>
 </body>
 </html>

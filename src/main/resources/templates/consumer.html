@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('自販機シミュレーター - 消費者')}"></head>
-<body th:insert="~{fragments/layout :: body}">
+<head th:replace="~{fragments :: head('自販機シミュレーター - 消費者')}"></head>
+<body th:insert="~{fragments :: body}">
 <div class="page-wrapper">
 
   <!-- 左：自販機本体 -->
@@ -104,6 +104,6 @@
   </div>
 </div>
 
-<div th:replace="~{fragments/layout :: footer('/js/consumer.js')}"></div>
-</body th:replace="~{fragments/layout :: body}">
+<div th:replace="~{fragments :: footer('/js/consumer.js')}"></div>
+</body>
 </html>
