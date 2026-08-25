@@ -7,9 +7,9 @@
 */
 
 /* 共通スタイル */
-@import url('style.css');
+@import url('stylesheets/style.css');
 
 /* ページ別スタイル */
-@import url('start.css');
-@import url('consumer.css');
-@import url('admin.css');
+@import url('stylesheets/start.css');
+@import url('stylesheets/consumer.css');
+@import url('stylesheets/admin.css');
