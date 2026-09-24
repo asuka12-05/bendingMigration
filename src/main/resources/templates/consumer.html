@@ -27,7 +27,7 @@
           th:data-inventory="${drink.inventory}"
           th:data-temperature="${drink.temperature}"
           th:data-image="${drink.imagePath}">
-          <img th:src="@{/images/__${drink.imagePath}__}" th:alt="${drink.name}" class="drink-img">
+          <img th:src="@{'/images/' + ${drink.imagePath}}" th:alt="${drink.name}" class="drink-img">
           <span class="drink-name" th:text="${drink.name}"></span>
           <span class="drink-price" th:text="'¥' + ${drink.price}"></span>
         </div>
@@ -52,7 +52,7 @@
       <!-- 取り出し口 -->
       <div class="tray" id="tray">
         <div th:if="${gotDrink != null}" class="got-drink">
-          <img th:src="@{/images/__${gotDrink.imagePath}__}" th:alt="${gotDrink.name}" class="tray-img">
+          <img th:src="@{'/images/' + ${gotDrink.imagePath}}" th:alt="${gotDrink.name}" class="tray-img">
         </div>
       </div>
 
