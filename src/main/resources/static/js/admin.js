@@ -79,7 +79,7 @@ function selectSlot(element, id, name, price, inventory, temp, isSoldOut, imageP
  * 詳細ビューに商品情報を表示
  */
 function showDetailView(id, name, price, inventory, temp, imagePath) {
-    document.getElementById("detailImg").src          = CONTEXT_PATH + "/images/" + imagePath;
+    document.getElementById("detailImg").src          = "/images/" + imagePath;
     document.getElementById("detailName").textContent  = name;
     document.getElementById("detailStock").textContent = inventory;
     document.getElementById("detailPrice").textContent = price;
@@ -143,7 +143,7 @@ function prevImage() {
  */
 function updateCustomImage() {
     const imgFile = IMAGE_LIST[imageIndex];
-    document.getElementById("customImg").src          = CONTEXT_PATH + "/images/" + imgFile;
+    document.getElementById("customImg").src          = "/images/" + imgFile;
     document.getElementById("customImageFile").value  = imgFile;
 }
 

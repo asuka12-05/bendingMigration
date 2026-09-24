@@ -106,7 +106,7 @@ function selectDrink(element, id, name, price, inventory, temperature, imagePath
 	
 	const statusImg = document.getElementById("statusImg");
 	if (statusImg) {
-		statusImg.src = CONTEXT_PATH + "/images/" + imagePath;
+		statusImg.src = "/images/" + imagePath;
 	}
    
     // 選択状態のハイライト更新
