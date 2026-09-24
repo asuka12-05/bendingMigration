@@ -15,7 +15,17 @@ import com.example.demo.tool.Const;
  */
 @Service
 public class ConsumerService {
-	private BendingDAO dao = new BendingDAO();
+	
+	/** DI */
+	private final BendingDAO dao;
+	
+	/**
+     * コンストラクタインジェクション
+     * @param dao BendingDAO
+     */
+    public ConsumerService(BendingDAO dao) {
+        this.dao = dao;
+    }
 	
 	/**
 	 * 商品をIDで検索
