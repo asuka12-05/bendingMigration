@@ -51,28 +51,28 @@ window.onload = function() {
  * @param {string}  temp		温度
  * @param {boolean} isSoldOut	売り切れか
  */
-function selectSlot(id, name, price, inventory, temp, isSoldOut, imagePath) {
-    currentSlot = { id, name, price, inventory, temp, isSoldOut, imagePath };
+function selectSlot(element, id, name, price, inventory, temp, isSoldOut, imagePath) {
+	currentSlot = { id, name, price, inventory, temp, isSoldOut, imagePath };
 
-    // スロットハイライト
-    document.querySelectorAll(".drink-slot").forEach(function (s) {
-        s.classList.remove("selected");
-    });
-    event.currentTarget.classList.add("selected");
+	// スロットハイライト
+	document.querySelectorAll(".drink-slot").forEach(function (s) {
+		s.classList.remove("selected");
+	});
+	element.classList.add("selected");
 
-    // 詳細ウインドウ更新
-    showDetailView(id, name, price, inventory, temp, imagePath);
+	// 詳細ウインドウ更新
+	showDetailView(id, name, price, inventory, temp, imagePath);
 
-    // 補充ボタン活性（在庫が最大(5本)でなければ活性）
-    document.getElementById("jsi-replenishBtn").disabled = (inventory >= 5);
+	// 補充ボタン活性（在庫が1本でも減っていれば活性）
+	document.getElementById("jsi-replenishBtn").disabled = (inventory >= 5);
 
-    // カスタムボタン活性（売り切れのみ）
-    document.getElementById("jsi-customBtn").disabled = !isSoldOut;
+	// カスタムボタン活性（売り切れのみ）
+	document.getElementById("jsi-customBtn").disabled = (inventory > 0);
 
-    // 補充プルダウンを閉じる
-    document.getElementById("jsi-replenishDropdown").style.display = "none";
-    document.getElementById("customView").style.display = "none";
-    document.getElementById("detailView").style.display = "flex";
+	// 補充プルダウンを閉じる
+	document.getElementById("jsi-replenishDropdown").style.display = "none";
+	document.getElementById("customView").style.display = "none";
+	document.getElementById("detailView").style.display = "flex";
 }
 
 /**
