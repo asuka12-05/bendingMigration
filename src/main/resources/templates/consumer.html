@@ -19,9 +19,14 @@
         </div>
         <!-- 購入可能 -->
         <div th:unless="${drink.inventory == 0}"
-          th:class="|drink-slot ${drink.temperature == 'HOT' ? 'hot' : 'cold'}|"
+          class="drink-slot"
+          th:classappend="${drink.temperature == 'HOT' ? 'hot' : 'cold'}"
           th:data-price="${drink.price}"
-          th:onclick="|selectDrink(${drink.id}, '${drink.name}', ${drink.price}, ${drink.inventory}, '${drink.temperature}', '${drink.imagePath}')|">
+          th:data-id="${drink.id}"
+          th:data-name="${drink.name}"
+          th:data-inventory="${drink.inventory}"
+          th:data-temperature="${drink.temperature}"
+          th:data-image="${drink.imagePath}">
           <img th:src="@{/images/__${drink.imagePath}__}" th:alt="${drink.name}" class="drink-img">
           <span class="drink-name" th:text="${drink.name}"></span>
           <span class="drink-price" th:text="'¥' + ${drink.price}"></span>
@@ -31,8 +36,8 @@
 
     <!-- コイン投入用hiddenフォーム -->
     <form th:action="@{/insertMoney}" method="post" id="coinForm">
-      <input type="hidden" name="amount" id="coinAmount" value="0">
-	  <input type="hidden" id="insertedMoney" th:value="${insertedMoney != null ? insertedMoney : 0}">
+      <input type="hidden" name="amount" id="coinAmount" value="0">	 
+      <input type="hidden" id="insertedMoney" th:value="${insertedMoney != null ? insertedMoney : 0}">
     </form>
 
     <!-- コインボタン -->

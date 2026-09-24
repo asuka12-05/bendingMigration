@@ -7,11 +7,6 @@
 const CONTEXT_PATH = document.body.dataset.contextPath;
 
 
-// ページ読み込み時にボタン状態を更新
-window.onload = function () {
-	updateDrinkButtons();
-};
-
 function updateDrinkButtons() {
     const inserted = parseInt(document.getElementById("insertedMoney").value) || 0;
     document.querySelectorAll(".drink-slot:not(.sold-out)").forEach(function (slot) {
@@ -28,6 +23,22 @@ function updateDrinkButtons() {
     });
 	updateHint();
 }
+
+window.onload = function() {
+  // ドリンクスロットにイベントリスナーを登録
+  document.querySelectorAll(".drink-slot:not(.sold-out)").forEach(function(slot) {
+    slot.addEventListener("click", function() {
+      const id          = this.dataset.id;
+      const name        = this.dataset.name;
+      const price       = this.dataset.price;
+      const inventory   = this.dataset.inventory;
+      const temperature = this.dataset.temperature;
+      const imagePath   = this.dataset.image;
+      selectDrink(this, id, name, price, inventory, temperature, imagePath);
+    });
+  });
+  updateDrinkButtons();
+};
 
 /**
  * 現在の投入金額から、次の目標（次に買えるもの）を計算して表示する
@@ -81,7 +92,7 @@ function insertCoin(amount) {
  * @param {number} inventory	在庫数
  * @param {string} temperature	温度(HOT/COLD)
  */
-function selectDrink(id, name, price, inventory, temperature, imagePath) {
+function selectDrink(element, id, name, price, inventory, temperature, imagePath) {
     selectedId = id;
 
     // hidden項目にdrinkIdをセット
@@ -98,7 +109,7 @@ function selectDrink(id, name, price, inventory, temperature, imagePath) {
     document.querySelectorAll(".drink-slot").forEach(function (slot) {
         slot.classList.remove("selected");
     });
-    event.currentTarget.classList.add("selected");
+    element.classList.add("selected");
 
     updateBuyBtn();
 }
