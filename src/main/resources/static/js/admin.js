@@ -25,6 +25,23 @@ let currentSlot = {
 // カスタム画像スライダー
 let imageIndex = 0;
 
+window.onload = function() {
+	document.querySelectorAll(".drink-slot").forEach(function(slot) {
+		slot.addEventListener("click", function() {
+			const id        = this.dataset.id;
+			const name      = this.dataset.name;
+			const price     = this.dataset.price;
+			const inventory = this.dataset.inventory;
+			const temp      = this.dataset.temperature;
+			const isSoldOut = this.dataset.soldout === "true";
+			const imagePath = this.dataset.image;
+
+			selectSlot(this, id, name, price, inventory, temp, isSoldOut, imagePath);
+		});
+	});
+};
+
+
 /**
  * 商品スロット選択
  * @param {number}  id			商品ID
