@@ -103,7 +103,11 @@ function selectDrink(element, id, name, price, inventory, temperature, imagePath
     document.getElementById("statusPrice").textContent     = price;
     document.getElementById("statusInventory").textContent = inventory;
     document.getElementById("statusTemp").textContent      = temperature === "HOT" ? "あったかい" : "つめたい";
-	document.getElementById("statusImg").src = CONTEXT_PATH + "/images/" + imagePath;
+	
+	const statusImg = document.getElementById("statusImg");
+	if (statusImg) {
+		statusImg.src = CONTEXT_PATH + "/images/" + imagePath;
+	}
    
     // 選択状態のハイライト更新
     document.querySelectorAll(".drink-slot").forEach(function (slot) {

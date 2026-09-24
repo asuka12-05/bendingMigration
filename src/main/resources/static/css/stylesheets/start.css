@@ -1,7 +1,6 @@
 @charset "UTF-8";
 /* スタート画面専用 */
 body {
-    background-image: url('/images/start.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -12,6 +11,7 @@ body {
 
 /* スタート画面全体の配置 */
 .start-wrapper {
+	background-image: url('/images/start.jpg');
     width: 100vw;
     height: 100vh;
     display: flex;
