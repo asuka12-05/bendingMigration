@@ -32,6 +32,7 @@
     <!-- コイン投入用hiddenフォーム -->
     <form th:action="@{/insertMoney}" method="post" id="coinForm">
       <input type="hidden" name="amount" id="coinAmount" value="0">
+	  <input type="hidden" id="insertedMoney" th:value="${insertedMoney != null ? insertedMoney : 0}">
     </form>
 
     <!-- コインボタン -->
